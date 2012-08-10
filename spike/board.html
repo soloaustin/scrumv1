@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html ng-app>
+    
+    <head>
+        <meta name="generator" content="HTML Tidy, see www.w3.org">
+        <title>
+            White Board
+        </title>
+        <script type="text/javascript" src="./lib/angular.js"></script>
+        <script type="text/javascript" src="./lib/dragndrop/EventHelpers.js">
+                
+        </script>
+        <script type="text/javascript" src="./lib/dragndrop/DragDropHelpers.js">
+                
+        </script>
+
+        <script type="text/javascript" src="board.js"></script>
+        <link rel="stylesheet" type="text/css" media="screen" href="assets/css/board.css">
+        <link rel="stylesheet" href="assets/css/bootstrap.css">
+    </head>
+    
+    <body ng-controller="BoardCtrl">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>SBI</th>
+                    <th>TODO</th>
+                    <th>In Progress</th>
+                    <th>Done</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="height: 80px">
+                        <div class="story" ></div>
+                    </td>
+                    <td class="taskContainer">
+                        <div class="task dev" draggable="true">a</div>
+                        <div class="task test" draggable="true">b</div>
+                        <div class="task qauto" draggable="true">c</div>
+                        <div class="task framework" draggable="true">d</div>
+                    </td>
+                    <td class="taskContainer"></td>
+                    <td class="taskContainer"></td>
+                </tr>
+            </tbody>
+        </table>
+    </body>
+
+</html>
