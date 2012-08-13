@@ -1,6 +1,6 @@
 function BoardCtrl($scope, $http) {
     $scope.stories = [];
-    $http.get('http://127.0.0.1:5984/tasks/_design/board/_view/query_board?group_level=1').success(function(response, code) {
+    $http.get('http://localhost:8125/db/tasks/_design/board/_view/query_board?group_level=1').success(function(response, code) {
         $scope.stories = response.rows;
         EventHelpers.addPageLoadEvent('DragDropHelpers.init');
     });

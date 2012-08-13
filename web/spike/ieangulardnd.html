@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html ng-app="scrumv1">
+<style type="text/css">
+	div{
+		width: 100px;
+		height: 100px;
+		background-color: #0ff;
+		border: solid 1px;
+	}
+</style>
+<script type="text/javascript" src="../lib/angular.js"></script>
+<script type="text/javascript">
+
+angular.element(body).bind('drag',function(e){
+	
+});
+
+	var dragndropDirective = {};
+	dragndropDirective['ngDraggable']=function(){
+		return function(scope,element,attr){
+			attr.$set("draggable","true");
+			element[0].style.cursor='move';
+
+			/*
+			 * This block allows IE to drag any arbitrary object, 
+			 * not just links and images.
+			 */
+			if(element[0].dragdrop){
+				element.bind('mousemove',function(e){
+					if (window.event.button == 1) {
+					    element[0].dragDrop();
+					}
+				});
+			}
+			element.bind('dragstart',function(e){
+
+			});
+			element.bind('dragend',function(e){});
+		};
+	};
+	angular.module('scrumv1', []).directive(dragndropDirective);
+</script>
+
+<script type="text/javascript" src="./ieangulardnd.js"></script>
+
+<body ng-controller="TestCtrl">
+<h1>Test #1: A Simple Draggable Object</h1>
+
+<div ng-draggable="true"">This is a
+draggable item</div>
+
+</body>
+</html>

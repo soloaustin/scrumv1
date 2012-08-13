@@ -44,30 +44,19 @@
                 </tr>
             </thead>
             <tbody>
-                <tr ng-repeat="story in stories">
+                <tr ng-repeat="story in stories" ng-init="taskStatus = ['todo','inProgress','done']">
                     <td style="height: 80px">
                         <div class="story">
                             {{story.key.story}}
                         </div>
                     </td>
-                    <td class="taskContainer" ng-dragover="dragOverHandler($event)" ng-drop="dropHandler($event,story,'todo')">
-                        <div ng-repeat="task in story.value.todo" class="task {{task.type}}" draggable="true"
+                    <td ng-repeat="status in taskStatus" class="taskContainer" ng-dragover="dragOverHandler($event)" ng-drop="dropHandler($event,story,status)">
+                        <div ng-repeat="task in story.value[status]" class="task {{task.type}}" draggable="true"
                         ng-dragstart="dragStartHandler($event,task)" ng-dragend="dragEndHandler($event)">
                             {{task.name}}
                         </div>
                     </td>
-                    <td class="taskContainer" ng-dragover="dragOverHandler($event)" ng-drop="dropHandler($event,story,'inProgress')">
-                        <div ng-repeat="task in story.value.inProgress" class="task {{task.type}}"
-                        draggable="true" ng-dragstart="dragStartHandler($event,task)" ng-dragend="dragEndHandler($event)">
-                            {{task.name}}
-                        </div>
-                    </td>
-                    <td class="taskContainer" ng-dragover="dragOverHandler($event)" ng-drop="dropHandler($event,story,'done')">
-                        <div ng-repeat="task in story.value.done" class="task {{task.type}}" draggable="true"
-                        ng-dragstart="dragStartHandler($event,task)" ng-dragend="dragEndHandler($event)">
-                            {{task.name}}
-                        </div>
-                    </td>
+                    
                 </tr>
             </tbody>
         </table>

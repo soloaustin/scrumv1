@@ -1,0 +1,67 @@
+th {
+	width: 25%;
+}
+
+.story{
+	width: 100px;
+	height: 100px;
+	background-color: #FFFF7F;
+}
+
+.task{
+	width: 100px;
+	height: 100px;
+	float: left;
+	margin: 5px;
+}
+
+.dev{
+	background-color: #2AFF00;
+}
+
+.qa{
+	background-color: #5555FF;
+}
+
+.qauto{
+	background-color: #7FFFFF;
+}
+
+.framework{
+	background-color: #FFD455;
+}
+
+.mouse_menu {
+		margin:0;
+		visibility:hidden;
+		position:absolute;
+		width:100px;
+		border-top: 1px solid #f0f0f0;
+		border-left: 1px solid #f0f0f0;
+		border-right: 1px solid #a9a9a9;
+		border-bottom: 1px solid #a9a9a9;
+		background-color:#eee;
+		list-style-type: none;
+		color:#000;
+	}
+	.mouse_menu li {
+		padding:2px 5px;
+		cursor:default;
+	}
+	.mouse_menu li:hover {
+		background-color:#ccc;
+	}
+
+	.mouse_menu .break {
+		padding: 2px;
+	}
+	.mouse_menu .break:hover {
+		background-color:#eee;
+	}
+	.mouse_menu .break hr{
+		color:#eee;
+		border-top: 1px solid #f0f0f0;
+		border-left: 1px solid #f0f0f0;
+		border-right: 1px solid #ddd;
+		border-bottom: 1px solid #ddd;
+	}
