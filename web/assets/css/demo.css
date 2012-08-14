@@ -194,39 +194,39 @@ body {
 }
 
 
-.type-style01{
+.type-dev{
 	border-color: #ff5f5f;
 }
-.type-style01 .triangle{
+.type-dev .triangle{
 	border-color:transparent  transparent transparent #ff5f5f;
 }
 
-.type-style02{
+.type-qa{
 	border-color: #ffc85f;
 }
-.type-style02 .triangle{
+.type-qa .triangle{
 	border-color:transparent  transparent transparent #ffc85f;
 }
 
-.type-style03{
+.type-qauto{
 	border-color: #5fc8ff;
 }
-.type-style03 .triangle{
+.type-qauto .triangle{
 	border-color:transparent  transparent transparent #5fc8ff;
 }
 
-.type-style04{
+.type-framework{
 	border-color: #4ed10e;
 }
-.type-style04 .triangle{
+.type-framework .triangle{
 	border-color:transparent  transparent transparent #4ed10e;
 }
 
 
-.type-style05{
+.type-ui{
 	border-color: #c367fe;
 }
-.type-style05 .triangle{
+.type-ui .triangle{
 	border-color:transparent  transparent transparent #c367fe;
 }
 

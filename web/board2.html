@@ -7,60 +7,130 @@
             White Board
         </title>
         <script type="text/javascript" src="./lib/angular.js">
+                
         </script>
-        
         <script type="text/javascript" src="./lib/dragndrop.js">
+                
         </script>
         <script type="text/javascript" src="./lib/underscore.js">
+                
         </script>
         <script type="text/javascript" src="board2.js">
+                
         </script>
-        <link rel="stylesheet" type="text/css" media="screen" href="assets/css/board.css">
         <link rel="stylesheet" href="assets/css/bootstrap.css">
+        <link href="./assets/css/demo.css" rel="stylesheet">
     </head>
     
     <body ng-controller="BoardCtrl">
-        <div id="whiteBoard">
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>
-                        SBI
-                    </th>
-                    <th>
-                        TODO
-                    </th>
-                    <th>
-                        In Progress
-                    </th>
-                    <th>
-                        Done
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr ng-repeat="story in stories" ng-init="taskStatus = ['todo','inProgress','done']">
-                    <td style="height: 80px">
-                        <div class="story">
-                            {{story.key.story}}
-                        </div>
-                    </td>
-                    <td ng-repeat="status in taskStatus" class="taskContainer" ng-dragover="dragOverHandler($event)" ng-drop="dropHandler($event,story,status)">
-                        <div ng-repeat="task in story.value[status]" class="task {{task.type}}" ng-draggable="true"
-                        ng-dragstart="dragStartHandler($event,task)" ng-dragend="dragEndHandler($event)">
-                            {{task.name}}
-                        </div>
-                    </td>
-                    
-                </tr>
-            </tbody>
-        </table>
+        <div class="tool-menu">
         </div>
-        <ul id="contextMenu" class="mouse_menu">
+        <div class="footer">
+            <p class="copyright">
+                COPYRIGHT © 2012 US RDS of hiSoft
+            </p>
+            <ul class="legend">
+                <li>
+                    <span class="icon legend01">
+                    </span>
+                    Development
+                </li>
+                <li>
+                    <span class="icon legend02">
+                    </span>
+                    Test
+                </li>
+                <li>
+                    <span class="icon legend03">
+                    </span>
+                    Automation Test
+                </li>
+                <li>
+                    <span class="icon legend04">
+                    </span>
+                    Framework
+                </li>
+                <li>
+                    <span class="icon legend05">
+                    </span>
+                    UI
+                </li>
+            </ul>
+        </div>
+        <div class="container-fixed">
+            <div class="top-title">
+                <table class="table table-striped table-bordered table-condensed">
+                    <thead>
+                        <tr>
+                            <th class="col01">
+                                Story
+                            </th>
+                            <th class="col02">
+                                TODO
+                            </th>
+                            <th class="col03">
+                                In Progress
+                            </th>
+                            <th class="col04">
+                                Done
+                            </th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+            <table class="table table-striped table-bordered">
+                <tbody>
+                    <tr ng-repeat="story in stories" ng-init="taskStatus = ['todo','inProgress','done']">
+                        <td class="col01">
+                            <div class="story">
+                                <h3>
+                                    {{story.key.story}}
+                                </h3>
+                                <p>
+                                    The project will be focused on development on the MS platform. Deliverables
+                                    will most likely center around creating web forms for data
+                                </p>
+                            </div>
+                        </td>
+                        <td class="col0{{2+$index}}" ng-repeat="status in taskStatus" class="taskContainer"
+                        ng-dragover="dragOverHandler($event)" ng-drop="dropHandler($event,story,status)">
+                            <div class="notes" ng-repeat="task in story.value[status]" ng-draggable="true"
+                            ng-dragstart="dragStartHandler($event,task)" ng-dragend="dragEndHandler($event)">
+                                <div class="type type-{{task.type}}">
+                                    <p>
+                                        {{task.name}}
+                                    </p>
+                                    <ul>
+                                        <li class="author">
+                                            Author
+                                        </li>
+                                        <li class="partner">
+                                            Partner
+                                        </li>
+                                    </ul>
+                                    <ul>
+                                        <li class="timer">
+                                            20h
+                                        </li>
+                                    </ul>
+                                    <span class="triangle">
+                                    </span>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <!-- <ul id="contextMenu" class="mouse_menu">
+
             <li>Add New Task
+
             </li>
+
             <li id="mouse_menu_debug">debug_pos</li>
-        </ul>
+
+        </ul> -->
     </body>
 
 </html>
