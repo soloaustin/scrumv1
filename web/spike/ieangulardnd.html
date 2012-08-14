@@ -8,12 +8,55 @@
 		border: solid 1px;
 	}
 </style>
+<style type="text/css">[draggable=true] {-khtml-user-drag: element; -webkit-user-drag: element; -khtml-user-select: none; -webkit-user-select: none;}</style>
 <script type="text/javascript" src="../lib/angular.js"></script>
 <script type="text/javascript">
+	var dragEffectNode;
+	var currentlyDragged;
 
-angular.element(body).bind('drag',function(e){
+	var getAbsoluteLeft = function(obj) {
+		var curleft = obj.offsetLeft;
+		if (obj.offsetParent) {
+
+			while (obj = obj.offsetParent ) {
+				curleft += obj.offsetLeft - obj.scrollLeft;
+			}
+		}
+		return curleft;
+	};
 	
-});
+	
+	
+	var getAbsoluteTop = function(node) {
+		var obj = node;
+		var positionArray = new Array();
+		
+		var curtop = obj.offsetTop;
+		if (obj.offsetParent) {
+
+			while (obj = obj.offsetParent) {
+					curtop += obj.offsetTop - obj.scrollTop;				
+			}
+		}
+		return curtop;
+	};
+	function doesShowVisualCues(e) {
+		return false;
+	}
+	angular.element().ready(function(){
+		var body = document.getElementsByTagName('body')[0];
+		angular.element(body).bind('drag',function(e){
+			if(!doesShowVisualCues(e)){
+				var nodeLeft = getAbsoluteLeft(currentlyDragged[0]);
+				var nodeTop = getAbsoluteTop(currentlyDragged[0]);
+				dragEffectNode[0].style.visibility = 'visible';
+				dragEffectNode[0].style.left = (e.offsetX + nodeLeft) + 'px';
+				dragEffectNode[0].style.top = (e.offsetY + nodeTop + 5) + 'px';
+			}
+		});
+
+	});
+	
 
 	var dragndropDirective = {};
 	dragndropDirective['ngDraggable']=function(){
@@ -25,7 +68,7 @@ angular.element(body).bind('drag',function(e){
 			 * This block allows IE to drag any arbitrary object, 
 			 * not just links and images.
 			 */
-			if(element[0].dragdrop){
+			if(element[0].dragDrop){
 				element.bind('mousemove',function(e){
 					if (window.event.button == 1) {
 					    element[0].dragDrop();
@@ -33,9 +76,22 @@ angular.element(body).bind('drag',function(e){
 				});
 			}
 			element.bind('dragstart',function(e){
-
+				if(!doesShowVisualCues(e)){
+					dragEffectNode = element.clone();
+					
+					document.body.appendChild(dragEffectNode[0]);
+					dragEffectNode[0].style.position = 'absolute';
+					dragEffectNode[0].style.visibility = 'hidden';
+					//CSSHelpers.setOpacity(dragEffectNode, 50);
+					
+					currentlyDragged = element;
+				}
 			});
-			element.bind('dragend',function(e){});
+			element.bind('dragend',function(e){
+				if(!doesShowVisualCues(e)){
+					document.body.removeChild(dragEffectNode[0]);
+				}
+			});
 		};
 	};
 	angular.module('scrumv1', []).directive(dragndropDirective);
@@ -46,8 +102,8 @@ angular.element(body).bind('drag',function(e){
 <body ng-controller="TestCtrl">
 <h1>Test #1: A Simple Draggable Object</h1>
 
-<div ng-draggable="true"">This is a
-draggable item</div>
+<a style="display: block; width: 100px; height: 100px; background-color: #f00" ng-draggable="true""><div>haha</div>This is a
+draggable item</a>
 
 </body>
 </html>

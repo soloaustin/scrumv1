@@ -2,23 +2,30 @@ function BoardCtrl($scope, $http) {
     $scope.stories = [];
     $http.get('http://localhost:8125/db/tasks/_design/board/_view/query_board?group_level=1').success(function(response, code) {
         $scope.stories = response.rows;
-        EventHelpers.addPageLoadEvent('DragDropHelpers.init');
     });
-    DragDropHelpers.fixVisualCues = true;
-    var taskNodes, taskContainers, currentlyDraggedNode;
+    var taskNodes, taskContainers;
 
     $scope.dragStartHandler = function(e,task) {
-        e.dataTransfer.setData("Task", angular.toJson(task));
-        currentlyDraggedNode = this;
+        e.dataTransfer.setData("Text", angular.toJson(task));
     };
     $scope.dragEndHandler = function(e) {
 
     };
     $scope.dragOverHandler = function(e) {
-        EventHelpers.preventDefault(e);
+        if (e.preventDefault) {
+            e.preventDefault();
+        }
+        
+        try {
+            e.returnValue = false;
+        } 
+        catch (ex) {
+            // do nothing
+        }
+        e.preventDefault();
     };
     $scope.dropHandler = function(e,story,status) {
-        var sourceTask = e.dataTransfer.getData("Task");
+        var sourceTask = e.dataTransfer.getData("Text");
         var targetTask = null;
         sourceTask = angular.fromJson(sourceTask);
         if(sourceTask.story != story.key){
@@ -41,8 +48,8 @@ function BoardCtrl($scope, $http) {
         }
         
         console.log(targetTask);
-        
         console.log($scope.stories);
+        
     };
     $scope.taskClickHandler = function(e,p){
         console.log(p.x + " " + p.y);

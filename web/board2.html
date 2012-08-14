@@ -6,14 +6,9 @@
         <title>
             White Board
         </title>
-        <script type="text/javascript" src="./lib/dragndrop/EventHelpers.js">
-                        
-        </script>
-        <script type="text/javascript" src="./lib/dragndrop/DragDropHelpers.js">
-                        
-        </script>
         <script type="text/javascript" src="./lib/angular.js">
         </script>
+        
         <script type="text/javascript" src="./lib/dragndrop.js">
         </script>
         <script type="text/javascript" src="./lib/underscore.js">
@@ -51,7 +46,7 @@
                         </div>
                     </td>
                     <td ng-repeat="status in taskStatus" class="taskContainer" ng-dragover="dragOverHandler($event)" ng-drop="dropHandler($event,story,status)">
-                        <div ng-repeat="task in story.value[status]" class="task {{task.type}}" draggable="true"
+                        <div ng-repeat="task in story.value[status]" class="task {{task.type}}" ng-draggable="true"
                         ng-dragstart="dragStartHandler($event,task)" ng-dragend="dragEndHandler($event)">
                             {{task.name}}
                         </div>
