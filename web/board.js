@@ -9,6 +9,11 @@ function BoardCtrl($scope, $http) {
     $http.get('http://localhost:8125/db/tasks/_design/board/_view/query_board?group_level=1').success(function(response, code) {
         $scope.stories = response.rows;
     });
+    $scope.createTask = function(){
+        $http.post('http://localhost:8125/db/tasks/',$scope.newTask).success(function(response,code){
+            console.log(response);
+        });
+    };
     var taskNodes, taskContainers;
 
     $scope.dragStartHandler = function(e,task) {
