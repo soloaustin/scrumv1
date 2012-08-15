@@ -2,7 +2,9 @@ function BoardCtrl($scope, $http) {
     $scope.contextMenu = {left:0,top:0};
     $scope.taskStatus = ['todo','inProgress','done'];
     $scope.legends = ['Development','Test','QAuto','Framework','UI']
-
+    $scope.members = [{name:'Austin'},{name:'Aaron'}];
+    $scope.newTask = {};
+    $scope.newTask.assignTo = $scope.members[0];
     $scope.stories = [];
     $http.get('http://localhost:8125/db/tasks/_design/board/_view/query_board?group_level=1').success(function(response, code) {
         $scope.stories = response.rows;
