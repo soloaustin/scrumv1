@@ -1,67 +1,320 @@
-th {
-	width: 25%;
+/* Add additional stylesheets below
+-------------------------------------------------- */
+/*
+  Bootstrap's documentation styles
+  Special styles for presenting Bootstrap's documentation and examples
+*/
+
+
+/* Body and structure
+-------------------------------------------------- */
+body {
+  position: relative;
+  padding-left: 50px;
+  background-color: #fff;
+  background-image: url(../img/grid-18px-masked.png);
+ /* background-image: url(../img/small_grid.png);*/
+ min-width: 1000px;
+ color: #666;
+ font-size: 12px;
+}
+.container-fixed{
+	padding-top: 28px;
+	padding-bottom: 30px;
+}
+.table{
+	margin: 0;
+}
+.table-striped tbody tr:nth-child(odd) td,
+.table-striped tbody tr:nth-child(odd) th {
+  background-color:transparent;
+}
+.table tbody tr:hover td,
+.table tbody tr:hover th {
+  background-color: transparent;
+}
+.table thead th{
+	text-align: center;
+	background: #eee;
+}
+
+.table th,
+.table td {
+  padding: 8px;
+  line-height: 18px;
+  text-align: left;
+  vertical-align: top;
+  border-top: 1px solid #bbb;
+}
+
+.table-bordered{
+	border-top: 0;
+}
+
+.tool-menu{
+	width: 50px;
+	background: #222;
+	height: 100%;
+	position:fixed;
+	left: 0;
+	top: 0;
+	z-index: 100;
+}
+.top-title{
+	position:fixed;
+	/*width: 100%;*/
+	*width: 100%;
+	_width: 100%;
+	width:100%;
+	top: 0;
+	z-index: 10;
+}
+
+.footer{
+	height: 30px;
+	background: #eee;
+	position: fixed;
+	width: 100%;
+	bottom: 0;
+	z-index: 10;
+	border-top: 1px solid #ccc;
+}
+.copyright{
+	font-size: 11px;
+	float: right;
+	margin-right: 60px;
+	line-height: 30px;
+	color: #999;
+}
+.legend{
+	/*float: right;*/
+	list-style: none;
+}
+.legend li{
+	display: inline;
+	line-height: 30px;
+	margin-right: 10px;
+	position: relative;
+	padding-left: 15px;
+}
+.legend span.icon{
+	width: 8px;
+	height: 8px;
+	display: block;
+	background: #ccc;
+	overflow: hidden;
+	position: absolute;
+	left: 0;
+	top: 4px;
+}
+
+.legend span.legend01{
+	 background: #ff5f5f;
+}
+.legend span.legend02{
+	 background: #ffc85f;
+}
+.legend span.legend03{
+	 background: #5fc8ff;
+}
+.legend span.legend04{
+	 background: #4ed10e;
+}
+.legend span.legend05{
+	 background: #c367fe;
+}
+
+
+.col01{
+	width: 170px;
 }
 
 .story{
-	width: 100px;
-	height: 100px;
-	background-color: #FFFF7F;
+	border: 1px solid #fbe04c;
+	background: #f6f99c;
+	padding: 2px;
+	margin: 3% 2%;
+	color: #a37c20;
+	font-size: 12px;
+}
+.story h3{
+	font-size: 12px;
+	padding: 2px 5px;
+	background: #fbe04c;
+	height: 15px;
+	line-height: 15px;
+	text-align: center;
+	color: #000;
+	/*border-bottom: solid 1px #a37c20;*/
+	
+}
+.story p{
+	padding: 5px;
 }
 
-.task{
-	width: 100px;
-	height: 100px;
+
+.notes{
+	width: 48%;
+	display: inline;
 	float: left;
-	margin: 5px;
+	background: #fff;
+	margin:1%;
+}
+.type{
+	padding: 5px;
+	border-width: 1px;
+	border-style: solid;
+	border-color: #ccc;
+	height: 150px;
+	position: relative;
+}
+.type:hover{
+	border-style: dashed;
+}
+.type ul{
+	list-style: none;
+	margin: 0;
+	width: 100%;
+	display: block;
+	overflow: hidden; 
+	margin-bottom: 10px;
 }
 
-.dev{
-	background-color: #2AFF00;
+.triangle {
+    border-color: transparent  transparent transparent red;
+    border-style: solid;
+    border-width: 25px 25px 0px 25px;
+    font-size: 0;
+    line-height: 0;    
+    width: 0;
+    height: 0;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    _border-top-color: white;
+    _border-bottom-color: white;
+    _filter: chroma( color =white);
 }
 
-.qa{
-	background-color: #5555FF;
+
+.type-dev{
+	border-color: #ff5f5f;
+}
+.type-dev .triangle{
+	border-color:transparent  transparent transparent #ff5f5f;
 }
 
-.qauto{
-	background-color: #7FFFFF;
+.type-qa{
+	border-color: #ffc85f;
+}
+.type-qa .triangle{
+	border-color:transparent  transparent transparent #ffc85f;
 }
 
-.framework{
-	background-color: #FFD455;
+.type-qauto{
+	border-color: #5fc8ff;
+}
+.type-qauto .triangle{
+	border-color:transparent  transparent transparent #5fc8ff;
 }
 
-.mouse_menu {
-		margin:0;
-		visibility:hidden;
-		position:absolute;
-		width:100px;
-		border-top: 1px solid #f0f0f0;
-		border-left: 1px solid #f0f0f0;
-		border-right: 1px solid #a9a9a9;
-		border-bottom: 1px solid #a9a9a9;
-		background-color:#eee;
-		list-style-type: none;
-		color:#000;
-	}
-	.mouse_menu li {
-		padding:2px 5px;
-		cursor:default;
-	}
-	.mouse_menu li:hover {
-		background-color:#ccc;
-	}
+.type-framework{
+	border-color: #4ed10e;
+}
+.type-framework .triangle{
+	border-color:transparent  transparent transparent #4ed10e;
+}
 
-	.mouse_menu .break {
-		padding: 2px;
+
+.type-ui{
+	border-color: #c367fe;
+}
+.type-ui .triangle{
+	border-color:transparent  transparent transparent #c367fe;
+}
+
+
+
+
+
+
+/* Responsive Docs
+-------------------------------------------------- */
+
+
+/* LARGE DESKTOP SCREENS */
+@media screen and (max-width:1023px) {
+	.col02,.col03,.col04{
+		width: 260px;
 	}
-	.mouse_menu .break:hover {
-		background-color:#eee;
+	.notes{
+		width: 98%;
 	}
-	.mouse_menu .break hr{
-		color:#eee;
-		border-top: 1px solid #f0f0f0;
-		border-left: 1px solid #f0f0f0;
-		border-right: 1px solid #ddd;
-		border-bottom: 1px solid #ddd;
+	.type{
+		height: 100px;
 	}
+	.type ul li{
+		float: left;
+		margin-right: 10px;
+	}
+}
+
+@media screen and (min-width: 1024px) and (max-width:1100px) {
+
+  .col02,.col03,.col04{
+  	width: 260px;
+  }
+  .notes{
+  	width: 98%;
+  }
+  .type{
+  	height: 90px;
+  }
+  .type ul li{
+  	float: left;
+  	margin-right: 10px;
+  }
+
+}
+@media screen and (min-width: 1101px) and ( max-width:1439px) {
+
+  .col02,.col03,.col04{
+  	width: 333px;
+  }
+
+}
+
+@media screen and (min-width: 1440px) and (max-width:1600px) {
+  .col02,.col03,.col04{
+  	width: 393px;
+  }
+  
+}
+
+@media screen and (min-width: 1601px) and (max-width:1920px) {
+  .col02,.col03,.col04{
+  	width: 453px;
+  }
+  .col02,.col03,.col04{
+  	width: 560px;
+  }
+  .notes{
+  	width: 31%;
+  }
+  
+}
+@media screen and (min-width: 1921px) {
+  .col02,.col03,.col04{
+  	width: 453px;
+  }
+  .col02,.col03,.col04{
+  	width: 560px;
+  }
+  .notes{
+  	width: 23%;
+  }
+  
+}
+
+
+

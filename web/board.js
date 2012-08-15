@@ -1,4 +1,8 @@
 function BoardCtrl($scope, $http) {
+    $scope.contextMenu = {left:0,top:0};
+    $scope.taskStatus = ['todo','inProgress','done'];
+    $scope.legends = ['Development','Test','QAuto','Framework','UI']
+
     $scope.stories = [];
     $http.get('http://localhost:8125/db/tasks/_design/board/_view/query_board?group_level=1').success(function(response, code) {
         $scope.stories = response.rows;
@@ -51,7 +55,9 @@ function BoardCtrl($scope, $http) {
         console.log($scope.stories);
         
     };
-    $scope.taskClickHandler = function(e,p){
-        console.log(p.x + " " + p.y);
+    $scope.rightclickHandler = function(e,p){
+        $scope.showContext = true;
+        $scope.contextMenu.left = p.x + "px";
+        $scope.contextMenu.top = p.y + "px";
     };
 }
