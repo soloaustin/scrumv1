@@ -1,34 +1,82 @@
 function BoardCtrl($scope, $http) {
-    $scope.contextMenu = {left:0,top:0};
-    $scope.taskStatus = ['todo','inProgress','done'];
-    $scope.legends = ['Development','Test','QAuto','Framework','UI']
-    $scope.members = [{name:'Austin'},{name:'Aaron'}];
-    $scope.newTask = {};
-    $scope.newTask.assignTo = $scope.members[0];
+    $scope.contextMenu = {
+        left: 0,
+        top: 0
+    };
+    $scope.taskStatus = ['todo', 'inProgress', 'done'];
+    $scope.legends = [{
+        value: 'dev',
+        label: 'Development'
+    }, {
+        value: 'qa',
+        label: 'Test'
+    }, {
+        value: 'qauto',
+        label: 'QAuto'
+    }, {
+        value: 'framework',
+        label: 'Framework'
+    }, {
+        label: 'UI',
+        value: 'ui'
+    }];
+    $scope.members = [{
+        name: 'austin'
+    }, {
+        name: 'aaron'
+    }]; //_.map([{name:'austin'},{name:'aaron'}],function(member){return member.name});
+    $scope.currentTask = {};
+
     $scope.stories = [];
-    $http.get('http://localhost:8125/db/stories/_design/sprint_backlog/_view/all',{params:{key:{"project":1,"sprint":1}}}).success(function(response,code){
-        var tempStories = _.map(response.rows,function(story){return _.pick(story,'value').value;})
-        $http.get('http://localhost:8125/db/tasks/_design/board/_view/query_board',{params:{group_level:1}}).success(function(response, code) {
+    $http.get('http://localhost:8125/db/stories/_design/sprint_backlog/_view/all', {
+        params: {
+            key: {
+                "project": 1,
+                "sprint": 1
+            }
+        }
+    }).success(function(response, code) {
+        var tempStories = _.map(response.rows, function(story) {
+            return _.pick(story, 'value').value;
+        })
+        $http.get('http://localhost:8125/db/tasks/_design/board/_view/query_board', {
+            params: {
+                group_level: 1
+            }
+        }).success(function(response, code) {
             var storyTasks = {};
-            _.each(response.rows,function(story){
+            _.each(response.rows, function(story) {
                 storyTasks[story.key] = story.value;
             });
-            $scope.stories = _.map(tempStories,function(story){
-                return _.extend(story,{tasks:storyTasks[story.id]});
+            $scope.stories = _.map(tempStories, function(story) {
+                return _.extend(story, {
+                    tasks: storyTasks[story.id]
+                });
             });
-        
+
         });
     });
 
 
-    $scope.createTask = function(){
-        $http.post('http://localhost:8125/db/tasks/',$scope.newTask).success(function(response,code){
+    $scope.createTask = function() {
+        $http.put('http://localhost:8125/db/tasks/'+$scope.currentTask.id, angular.toJson($scope.currentTask)).success(function(response, code) {
             console.log(response);
         });
     };
+
+    $scope.popupCreateModal = function() {
+        $scope.currentTask = {story:$scope.currentTask.storyId};
+        $scope.createOrEdit = "Create";
+        $scope.createOrSave = "Create New Task";
+    };
+    $scope.popupEditModal = function() {
+        $scope.createOrEdit = "Edit";
+        $scope.createOrSave = "Save Changes";
+    };
+
     var taskNodes, taskContainers;
 
-    $scope.dragStartHandler = function(e,task) {
+    $scope.dragStartHandler = function(e, task) {
         e.dataTransfer.setData("Text", angular.toJson(task));
     };
     $scope.dragEndHandler = function(e) {
@@ -38,45 +86,51 @@ function BoardCtrl($scope, $http) {
         if (e.preventDefault) {
             e.preventDefault();
         }
-        
+
         try {
             e.returnValue = false;
-        } 
-        catch (ex) {
+        } catch (ex) {
             // do nothing
         }
         e.preventDefault();
     };
-    $scope.dropHandler = function(e,story,status) {
+    $scope.dropHandler = function(e, story, status) {
         var sourceTask = e.dataTransfer.getData("Text");
         var targetTask = null;
         sourceTask = angular.fromJson(sourceTask);
-        if(sourceTask.story != story.key){
+        if (sourceTask.story != story.id) {
             return;
         }
-        story = story.value;
+        var tasks = story.tasks;
 
-        console.log("sourceTask\n"+sourceTask.id);
-        
-        targetTask = _.find(_.union(story.todo,story.inProgress,story.done),function(task){
+        console.log("sourceTask\n" + sourceTask.id);
+
+        targetTask = _.find(_.union(tasks.todo, tasks.inProgress, tasks.done), function(task) {
             console.log(task.id);
             return task.id == sourceTask.id;
         });
-        if(targetTask.status!=status){
-            story[targetTask.status] = _.filter(story[targetTask.status],function(task){
+        if (targetTask.status != status) {
+            tasks[targetTask.status] = _.filter(tasks[targetTask.status], function(task) {
                 return task.id != targetTask.id;
             });
             targetTask.status = status;
-            story[status].push(targetTask);
+            tasks[status].push(targetTask);
         }
-        
+
         console.log(targetTask);
         console.log($scope.stories);
-        
+
     };
-    $scope.rightclickHandler = function(e,p){
+    $scope.rightclickHandler = function(e, p, storyId, newOnlyFlag, editTask) {
         $scope.showContext = true;
         $scope.contextMenu.left = p.x + "px";
         $scope.contextMenu.top = p.y + "px";
+
+        $scope.newOnly = newOnlyFlag;
+        if ($scope.newOnly) {
+            $scope.currentTask = {story:storyId};
+        } else {
+            $scope.currentTask = editTask;
+        }
     };
 }

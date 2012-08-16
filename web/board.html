@@ -38,10 +38,10 @@
         <ul id="contextMenu" class="well nav nav-list" ng-show="showContext" ng-style="contextMenu"
         ;>
             <li>
-                <a data-toggle="modal" href="#myModal">Create New Task</a>
+                <a data-toggle="modal" href="#myModal" ng-click="popupCreateModal()">Create New Task</a>
             </li>
-            <li>
-                <a data-toggle="modal" href="#myModal">Edit Task</a>
+            <li ng-hide="newOnly">
+                <a data-toggle="modal" href="#myModal" ng-click="popupEditModal()">Edit Task</a>
             </li>
         </ul>
         <div class="tool-menu">
@@ -54,7 +54,7 @@
                 <li ng-repeat="legend in legends">
                     <span class="icon legend0{{$index+1}}">
                     </span>
-                    {{legend}}
+                    {{legend.label}}
                 </li>
             </ul>
         </div>
@@ -92,26 +92,26 @@
                                 </p>
                             </div>
                         </td>
-                        <td class="col0{{2+$index}}" ng-repeat="status in taskStatus" ng-dragover="dragOverHandler($event)"
+                        <td class="col0{{2+$index}}" ng-rightclick="rightclickHandler($event,$position,story.id,true)" ng-repeat="status in taskStatus" ng-dragover="dragOverHandler($event)"
                         ng-drop="dropHandler($event,story,status)">
                             <div class="notes" ng-repeat="task in story.tasks[status]" ng-draggable="true"
                             ng-dragstart="dragStartHandler($event,task)" ng-dragend="dragEndHandler($event)"
-                            ng-rightclick="rightclickHandler($event,$position)">
+                            ng-rightclick="rightclickHandler($event,$position,story.id,false,task)">
                                 <div class="type type-{{task.type}}">
                                     <p>
                                         {{task.name}}
                                     </p>
                                     <ul>
                                         <li class="author">
-                                            Author
+                                            Author {{task.assignTo}}
                                         </li>
                                         <li class="partner">
-                                            Partner
+                                            Partner {{task.pair}}
                                         </li>
                                     </ul>
                                     <ul>
                                         <li class="timer">
-                                            20h
+                                            {{task.loe}}Hour(s)
                                         </li>
                                     </ul>
                                     <span class="triangle">
@@ -129,7 +129,7 @@
                     &times;
                 </button>
                 <h3>
-                    Create Task
+                    {{createOrEdit}} Task
                 </h3>
             </div>
             <div class="modal-body">
@@ -140,7 +140,7 @@
                                 Description:
                             </label>
                             <div class="controls">
-                                <input type="text" class="input-xlarge" ng-model="newTask.name">
+                                <input type="text" class="input-xlarge" ng-model="currentTask.name">
                             </div>
                         </div>
                         <div class="control-group">
@@ -148,7 +148,10 @@
                                 Type:
                             </label>
                             <div class="controls">
-                                <select ng-model="newTask.type" ng-options="l for l in legends">
+                                <select ng-model="currentTask.type">
+                                    <option ng-repeat="l in legends" 
+                                    ng-selected="l.value==currentTask.type" 
+                                    value="{{l.value}}">{{l.label}}</option>
                                 </select>
                             </div>
                         </div>
@@ -157,7 +160,11 @@
                                 Assign To:
                             </label>
                             <div class="controls">
-                                <select ng-model="newTask.assignTo" ng-options="m.name for m in members">
+                                <select ng-model="currentTask.assignTo">
+                                    <option 
+                                    ng-repeat="m in members" 
+                                    ng-selected="m.name==currentTask.assignTo" 
+                                    value="{{m.name}}">{{m.name}}</option>
                                 </select>
                             </div>
                         </div>
@@ -166,7 +173,7 @@
                                 Pair Partner:
                             </label>
                             <div class="controls">
-                                <select ng-model="newTask.pair" ng-options="m.name for m in members">
+                                <select ng-model="currentTask.pair" ng-options="m for m in members">
                                     <option>
                                         Choose Team Member
                                     </option>
@@ -179,7 +186,7 @@
                             </label>
                             <div class="controls">
                                 <div class="input-append">
-                                    <input type="text" class="input-xlarge span1" ng-model="newTask.loe">
+                                    <input type="text" class="input-xlarge span1" ng-model="currentTask.loe">
                                     <span class="add-on">
                                         Hours
                                     </span>
@@ -194,7 +201,7 @@
             </div>
             <div class="modal-footer">
                 <a href="#" class="btn" data-dismiss="modal">Close</a>
-                <a href="#" class="btn btn-primary" ng-click="createTask();">Create</a>
+                <a href="#" class="btn btn-primary" ng-click="createTask();">{{createOrSave}}</a>
             </div>
         </div>
     </body>
