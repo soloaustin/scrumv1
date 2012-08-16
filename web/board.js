@@ -59,13 +59,20 @@ function BoardCtrl($scope, $http) {
 
 
     $scope.createTask = function() {
-        $http.put('http://localhost:8125/db/tasks/'+$scope.currentTask.id, angular.toJson($scope.currentTask)).success(function(response, code) {
-            console.log(response);
-        });
+        if($scope.currentTask.id){
+            $http.put('http://localhost:8125/db/tasks/'+$scope.currentTask.id, angular.toJson($scope.currentTask)).success(function(response, code) {
+                console.log(response);
+            });
+        }else{
+            $http.post('http://localhost:8125/db/tasks/', angular.toJson($scope.currentTask)).success(function(response, code) {
+                console.log(response);
+            });
+        }
+        
     };
 
     $scope.popupCreateModal = function() {
-        $scope.currentTask = {story:$scope.currentTask.storyId};
+        $scope.currentTask = {story:$scope.currentTask.story,status:'todo'};
         $scope.createOrEdit = "Create";
         $scope.createOrSave = "Create New Task";
     };
