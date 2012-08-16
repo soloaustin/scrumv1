@@ -6,9 +6,21 @@ function BoardCtrl($scope, $http) {
     $scope.newTask = {};
     $scope.newTask.assignTo = $scope.members[0];
     $scope.stories = [];
-    $http.get('http://localhost:8125/db/tasks/_design/board/_view/query_board?group_level=1').success(function(response, code) {
-        $scope.stories = response.rows;
+    $http.get('http://localhost:8125/db/stories/_design/sprint_backlog/_view/all',{params:{key:{"project":1,"sprint":1}}}).success(function(response,code){
+        var tempStories = _.map(response.rows,function(story){return _.pick(story,'value').value;})
+        $http.get('http://localhost:8125/db/tasks/_design/board/_view/query_board',{params:{group_level:1}}).success(function(response, code) {
+            var storyTasks = {};
+            _.each(response.rows,function(story){
+                storyTasks[story.key] = story.value;
+            });
+            $scope.stories = _.map(tempStories,function(story){
+                return _.extend(story,{tasks:storyTasks[story.id]});
+            });
+        
+        });
     });
+
+
     $scope.createTask = function(){
         $http.post('http://localhost:8125/db/tasks/',$scope.newTask).success(function(response,code){
             console.log(response);

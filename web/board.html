@@ -85,17 +85,16 @@
                         <td class="col01">
                             <div class="story">
                                 <h3>
-                                    {{story.key.story}}
+                                    {{story.id}}
                                 </h3>
                                 <p>
-                                    The project will be focused on development on the MS platform. Deliverables
-                                    will most likely center around creating web forms for data
+                                    {{story.desc}}
                                 </p>
                             </div>
                         </td>
                         <td class="col0{{2+$index}}" ng-repeat="status in taskStatus" ng-dragover="dragOverHandler($event)"
                         ng-drop="dropHandler($event,story,status)">
-                            <div class="notes" ng-repeat="task in story.value[status]" ng-draggable="true"
+                            <div class="notes" ng-repeat="task in story.tasks[status]" ng-draggable="true"
                             ng-dragstart="dragStartHandler($event,task)" ng-dragend="dragEndHandler($event)"
                             ng-rightclick="rightclickHandler($event,$position)">
                                 <div class="type type-{{task.type}}">
