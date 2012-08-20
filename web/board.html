@@ -173,10 +173,11 @@
                                 Pair Partner:
                             </label>
                             <div class="controls">
-                                <select ng-model="currentTask.pair" ng-options="m for m in members">
-                                    <option>
-                                        Choose Team Member
-                                    </option>
+                                <select ng-model="currentTask.pair">
+                                    <option 
+                                    ng-repeat="m in members" 
+                                    ng-selected="m.name==currentTask.pair" 
+                                    value="{{m.name}}">{{m.name}}</option>
                                 </select>
                             </div>
                         </div>

@@ -50,6 +50,9 @@ function BoardCtrl($scope, $http) {
                 storyTasks[story.key] = story.value;
             });
             $scope.stories = _.map(tempStories, function(story) {
+                if(storyTasks[story.id]==null){
+                    storyTasks[story.id] = {'todo':[],'inProgress':[],'done':[]};
+                }
                 return _.extend(story, {
                     tasks: storyTasks[story.id]
                 });
@@ -68,6 +71,12 @@ function BoardCtrl($scope, $http) {
         }else{
             $http.post($scope.host+'/db/tasks/', angular.toJson($scope.currentTask)).success(function(response, code) {
                 $scope.currentTask._rev = response.rev;
+                $scope.currentTask.id = response.id;
+                _.each($scope.stories, function(story) {
+                    if(story.id == $scope.currentTask.story){
+                        story.tasks['todo'].push($scope.currentTask);
+                    }
+                });
                 $('#myModal').modal('hide');
             });
         }
