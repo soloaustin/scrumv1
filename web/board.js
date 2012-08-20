@@ -29,7 +29,7 @@ function BoardCtrl($scope, $http) {
     $scope.currentTask = {};
 
     $scope.stories = [];
-    $http.get($scope.host+'/db/stories/_design/sprint_backlog/_view/all', {
+    $http.get($scope.host+'/db/stories/_design/stories/_view/sprint_backlog', {
         params: {
             key: {
                 "project": 1,
@@ -40,7 +40,7 @@ function BoardCtrl($scope, $http) {
         var tempStories = _.map(response.rows, function(story) {
             return _.pick(story, 'value').value;
         })
-        $http.get($scope.host+'/db/tasks/_design/board/_view/query_board', {
+        $http.get($scope.host+'/db/tasks/_design/tasks/_view/daily_board', {
             params: {
                 group_level: 1
             }
