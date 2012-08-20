@@ -4,3 +4,4 @@ var stories = {"total_rows":3,"offset":0,"rows":[
 {"id":"98d86e571d0fc243b37493f4f60020b1","key":{"project":1,"sprint":1},"value":{"desc":"as a user I want to create different type of tasks according to roles of team members like dev qa ui... so that others can easily tell how the story compoised by looking into the 'digital white board'.","id":300003}}
 ]}
 
+stories = _.map(stories.rows,function(story){_.pick(story,'value')})

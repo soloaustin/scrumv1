@@ -61,11 +61,13 @@ function BoardCtrl($scope, $http) {
     $scope.createTask = function() {
         if($scope.currentTask.id){
             $http.put('http://localhost:8125/db/tasks/'+$scope.currentTask.id, angular.toJson($scope.currentTask)).success(function(response, code) {
-                console.log(response);
+                $scope.currentTask._rev = response.rev;
+                $('#myModal').modal('hide');
             });
         }else{
             $http.post('http://localhost:8125/db/tasks/', angular.toJson($scope.currentTask)).success(function(response, code) {
-                console.log(response);
+                $scope.currentTask._rev = response.rev;
+                $('#myModal').modal('hide');
             });
         }
         
@@ -110,10 +112,7 @@ function BoardCtrl($scope, $http) {
         }
         var tasks = story.tasks;
 
-        console.log("sourceTask\n" + sourceTask.id);
-
         targetTask = _.find(_.union(tasks.todo, tasks.inProgress, tasks.done), function(task) {
-            console.log(task.id);
             return task.id == sourceTask.id;
         });
         if (targetTask.status != status) {
@@ -122,10 +121,11 @@ function BoardCtrl($scope, $http) {
             });
             targetTask.status = status;
             tasks[status].push(targetTask);
+            $http.put('http://localhost:8125/db/tasks/'+targetTask.id, angular.toJson(targetTask)).success(function(response, code) {
+                $scope.targetTask._rev = response.rev;
+            });
         }
 
-        console.log(targetTask);
-        console.log($scope.stories);
 
     };
     $scope.rightclickHandler = function(e, p, storyId, newOnlyFlag, editTask) {
