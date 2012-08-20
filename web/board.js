@@ -1,4 +1,5 @@
 function BoardCtrl($scope, $http) {
+    $scope.host = ".";//"http://localhost:8125";
     $scope.contextMenu = {
         left: 0,
         top: 0
@@ -28,7 +29,7 @@ function BoardCtrl($scope, $http) {
     $scope.currentTask = {};
 
     $scope.stories = [];
-    $http.get('http://localhost:8125/db/stories/_design/sprint_backlog/_view/all', {
+    $http.get($scope.host+'/db/stories/_design/sprint_backlog/_view/all', {
         params: {
             key: {
                 "project": 1,
@@ -39,7 +40,7 @@ function BoardCtrl($scope, $http) {
         var tempStories = _.map(response.rows, function(story) {
             return _.pick(story, 'value').value;
         })
-        $http.get('http://localhost:8125/db/tasks/_design/board/_view/query_board', {
+        $http.get($scope.host+'/db/tasks/_design/board/_view/query_board', {
             params: {
                 group_level: 1
             }
@@ -60,12 +61,12 @@ function BoardCtrl($scope, $http) {
 
     $scope.createTask = function() {
         if($scope.currentTask.id){
-            $http.put('http://localhost:8125/db/tasks/'+$scope.currentTask.id, angular.toJson($scope.currentTask)).success(function(response, code) {
+            $http.put($scope.host+'/db/tasks/'+$scope.currentTask.id, angular.toJson($scope.currentTask)).success(function(response, code) {
                 $scope.currentTask._rev = response.rev;
                 $('#myModal').modal('hide');
             });
         }else{
-            $http.post('http://localhost:8125/db/tasks/', angular.toJson($scope.currentTask)).success(function(response, code) {
+            $http.post($scope.host+'/db/tasks/', angular.toJson($scope.currentTask)).success(function(response, code) {
                 $scope.currentTask._rev = response.rev;
                 $('#myModal').modal('hide');
             });
@@ -121,7 +122,7 @@ function BoardCtrl($scope, $http) {
             });
             targetTask.status = status;
             tasks[status].push(targetTask);
-            $http.put('http://localhost:8125/db/tasks/'+targetTask.id, angular.toJson(targetTask)).success(function(response, code) {
+            $http.put($scope.host+'/db/tasks/'+targetTask.id, angular.toJson(targetTask)).success(function(response, code) {
                 $scope.targetTask._rev = response.rev;
             });
         }
