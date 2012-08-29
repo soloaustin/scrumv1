@@ -1,6 +1,6 @@
 <html>
 <head>
-	<title>></title>
+	<title></title>
 	<script src="../lib/raphael.js"></script>
     <script src="../lib/g.raphael.js"></script>
     <script src="../lib/g.line.js"></script>
@@ -8,11 +8,13 @@
         window.onload = function () {
         	var r = Raphael("holder"),
                     txtattr = { font: "12px sans-serif" };
-            var lines = r.linechart(10,10, 600, 400, [[0,1, 2, 3, 4, 5, 6, 7,8,9,10],[0,1, 2, 3, 4, 5, 6, 7,8,9,10]], [[100,90,80,70,60,50,40,30,20,10,0], [100,90,75,65,60,55,42,35,22,10,0]], { nostroke: false, axis: "0 0 1 1", symbol: "circle", smooth: true,axisxstep:10,axisystep:10 }).hoverColumn(function () {
+            var targetValues = [100,90,80,70,60,50,40,30,20,10,0];        
+            var axis = r.linechart(20,20,600,400,[0,1, 2, 3, 4, 5, 6, 7,8,9,10],targetValues,{axis: "0 0 1 1",axisystep:10,axisxstep:10,shade:true,colors:['#C3C3C3']});        
+            var lines = r.linechart(20,20, 600, 400, [0,1, 2, 3, 4, 5, 6, 7,8,9,10], [100,90,75,65,60,55,42,35,22,10,0], { nostroke: false,  symbol: "circle", smooth: true}).hoverColumn(function () {
                     this.tags = r.set();
 
                     for (var i = 0, ii = this.y.length; i < ii; i++) {
-                        this.tags.push(r.tag(this.x, this.y[i], this.values[i], 160, 10).insertBefore(this).attr([{ fill: "#fff" }, { fill: this.symbols[i].attr("fill") }]));
+                        this.tags.push(r.label(this.x, this.y[i], this.values[i]+"\n"+targetValues[this.axis]).insertBefore(this).attr([{ fill: "#fff" }, { fill: this.symbols[i].attr("fill") }]));
                     }
                 }, function () {
                     this.tags && this.tags.remove();
