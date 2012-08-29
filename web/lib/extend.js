@@ -3,6 +3,9 @@
     var dragEffectNode;
     var currentlyDragged;
     var cachedShowVisualCues = null;
+    var offsetX=0;
+    var offsetY=0;
+
 
     var getAbsoluteLeft = function(obj) {
             var curleft = obj.offsetLeft;
@@ -50,6 +53,7 @@
         }
         return cachedShowVisualCues;
     }
+    
     angular.element().ready(function() {
         //TODO: add ie detection
         document.oncontextmenu=function(e){return false;}   
@@ -61,8 +65,9 @@
                 var nodeLeft = getAbsoluteLeft(currentlyDragged[0]);
                 var nodeTop = getAbsoluteTop(currentlyDragged[0]);
                 dragEffectNode[0].style.visibility = 'visible';
-                dragEffectNode[0].style.left = (e.offsetX + nodeLeft) + 'px';
-                dragEffectNode[0].style.top = (e.offsetY + nodeTop + 5) + 'px';
+                dragEffectNode[0].style.left = (e.offsetX /*- dragEffectNode[0].ox*/ + nodeLeft) + 'px';
+                dragEffectNode[0].style.top = (e.offsetY  /*- dragEffectNode[0].oy*/ + nodeTop) + 'px';
+                //console.log("y:"+dragEffectNode[0].oy);
             }
         });
 
@@ -93,7 +98,12 @@
                     dragEffectNode[0].style.visibility = 'hidden';
                     //CSSHelpers.setOpacity(dragEffectNode, 50);
                     currentlyDragged = element;
-                }
+                    dragEffectNode.css('width',element[0].clientWidth + 'px');
+                    dragEffectNode.css('height',element[0].clientHeight + 'px');
+                    // console.log(e.offsetX+" "+e.offsetY);
+                    dragEffectNode[0].ox = e.offsetX;
+                    dragEffectNode[0].oy = e.offsetY;
+                 }
             });
             element.bind('dragend', function(e) {
                 if (!doesShowVisualCues(e)) {
