@@ -1,0 +1,83 @@
+<div class="wallpor" ng-controller="BacklogCtrl">
+  <div class="sprintTree">
+    <div class="sprintTree_tit"><span class="black">Sprint </span> <span class="gray">Tree</span><span class="page">Sprint：10/100</span></div>
+    <div class="sprintTree_list">
+      <table border="0" cellspacing="0">
+        <thead>
+          <tr>
+            <td class="sprint_list1">Sprint</td>
+            <td>Team A</td>
+            <td class="last">Team B</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="clas">
+            <td  class="sprint_list1"><div class="sprint_name">Sprint<span class="sprint_bq"></span></div>
+              <div class="sprint_ty"></div></td>
+            <td><div class="sprint_naber1"> <span>Story Name </span>
+                <p>Story Description Story Description Story Description Story...</p>
+              </div>
+              <div class="sprint_naber2"> <span>Story Name </span>
+                <p>Story Description Story Description Story Description Story...</p>
+              </div>
+              <div class="sprint_naber3"> <span>Story Name </span>
+                <p>Story Description Story Description Story Description Story...</p>
+              </div></td>
+            <td class="last"><div class="sprint_naber5"> <span>Story Name </span>
+                <p>Story Description Story Description Story Description Story...</p>
+              </div>
+              <div class="sprint_naber4"> <span>Story Name </span>
+                <p>Story Description Story Description Story Description Story...</p>
+              </div>
+              <div class="sprint_naber2"> <span>Story Name </span>
+                <p>Story Description Story Description Story Description Story...</p>
+              </div></td>
+          </tr>
+          <tr class="clas">
+            <td  class="sprint_list1"><div class="sprint_name">Sprint<span class="sprint_bq"></span></div>
+              <div class="sprint_ty"></div></td>
+            <td><div class="sprint_naber4"> <span>Story Name </span>
+                <p>Story Description Story Description Story Description Story...</p>
+              </div></td>
+            <td class="last"><div class="sprint_naber1"> <span>Story Name </span>
+                <p>Story Description Story Description Story Description Story...</p>
+              </div>
+              <div class="sprint_naber3"> <span>Story Name </span>
+                <p>Story Description Story Description Story Description Story...</p>
+              </div></td>
+          </tr>
+          <tr class="clas">
+            <td  class="sprint_list1"><div class="sprint_name">Sprint<span class="sprint_bq"></span></div>
+              <div class="sprint_ty"></div></td>
+            <td><div class="sprint_naber1"> <span>Story Name </span>
+                <p>Story Description Story Description Story Description Story...</p>
+              </div>
+              <div class="sprint_naber3"> <span>Story Name </span>
+                <p>Story Description Story Description Story Description Story...</p>
+              </div></td>
+            <td class="last"><div class="sprint_naber5"> <span>Story Name </span>
+                <p>Story Description Story Description Story Description Story...</p>
+              </div></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="storyTree">
+    <div class="storyTree_top">
+      <div class="storyTree_tit"><span class="black">Story</span> <span class="gray">Tree</span></div>
+      <div class="newStory_btn">      <button class="btn btn-mini btn-primary">New Story</button></div>
+    </div>
+    <div class="storyTree_list">
+      <a href="###" ng-repeat="story in unassignedStory"><span class="storyTree_list_icon"></span> <span class="storyTree_list_con">
+      <h1>{{story.value.estimate}}</h1>
+      <p>{{story.value.title}}</p>
+      </span></a>
+    </div>
+  </div>
+  <div style=" clear:both;"></div>
+<div class="mag_bom"></div></div>
+
+<div class="footer"> <span class="copyright">Copyright &copy; HiSoft USBU Team</span> </div>
+</body>
+</html>

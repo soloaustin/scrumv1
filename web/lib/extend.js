@@ -205,5 +205,10 @@
 
         };
 
-    angular.module('scrumv1', []).directive(extendDirective);
+    angular.module('scrumv1', [],function($routeProvider, $locationProvider) {
+        angular.forEach('overview backlog sprint'.split(' '), function(name) {
+            $routeProvider.when('/'+name, {templateUrl: name+'.html'});
+        });
+        $routeProvider.when('/', {templateUrl: 'overview.html'});
+    }).directive(extendDirective);
 })();

@@ -1,0 +1,3 @@
+function SprintCtrl($scope,$http){
+	
+}
